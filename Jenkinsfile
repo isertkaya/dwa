@@ -33,7 +33,7 @@ pipeline {
         SONAR_HOST_URL = 'https://sonar.isertkaya.de'
       }
       steps {
-        sh 'sonar-scanner -Dsonar.sources=. \\-Dsonar.host.url=$SONAR_HOST_URL -Dsonar.projectKey=myproject -Dsonar.login=$SONAR_LOGIN '
+        sh 'sonar-scanner -Dsonar.sources=. -Dsonar.java.binaries=./target/*.war -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.projectKey=myproject -Dsonar.login=$SONAR_LOGIN '
       }
     }
 
