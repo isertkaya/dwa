@@ -17,7 +17,23 @@ pipeline {
       }
       steps {
         sh 'mvn clean  package'
-        archiveArtifacts(allowEmptyArchive: true, artifacts: '**/targets/*.war')
+        archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.war')
+      }
+    }
+
+    stage('SonarScanner') {
+      agent {
+        docker {
+          image 'sonarsource/sonar-scanner-cli'
+        }
+
+      }
+      environment {
+        SONAR_LOGIN = '45bb57a590fe12b5b78c7a41dd7d95c4d95e90dd'
+        SONAR_HOST_URL = 'https://sonar.isertkaya.de'
+      }
+      steps {
+        sh 'sonar-scanner -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.projectKey=myproject -Dsonar.login=$SONAR_LOGIN '
       }
     }
 
